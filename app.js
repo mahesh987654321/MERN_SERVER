@@ -1,22 +1,18 @@
 const express = require("express");
-const { default: mongoose } = require("mongoose");
-
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 const app = express();
 const port = 3000;
+dotenv.config({ path: "./config.env" });
 const middleware = (req, res, next) => {
   console.log("This is a part of middleware");
   next();
 };
 // middleware();
-const DB =
-  "mongodb+srv://mern_project:5ns6m14NIEZo9YjM@cluster0.eqxbe.mongodb.net/mern_project?retryWrites=true&w=majority";
+const DB = process.env.DATABASE;
+
 mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
+  .connect(DB)
   .then(() => {
     console.log("Connection successful");
   })
