@@ -1,27 +1,21 @@
 const express = require("express");
-const mongoose = require("mongoose");
+
 const dotenv = require("dotenv");
+require("./db/conn");
+
 const app = express();
-const port = 3000;
+const port = 5000;
+app.use(express.json());
+const User = require("./model/userSchema");
 dotenv.config({ path: "./config.env" });
 const middleware = (req, res, next) => {
   console.log("This is a part of middleware");
   next();
 };
 // middleware();
-const DB = process.env.DATABASE;
-
-mongoose
-  .connect(DB)
-  .then(() => {
-    console.log("Connection successful");
-  })
-  .catch(() => {
-    console.log("Connection Unsucessful");
-  });
-
+app.use(require("./router/auth"));
 app.get("/", (req, res) => {
-  res.send("Home page");
+  res.send("Home page app");
 });
 app.get("/about", middleware, (req, res) => {
   res.send("About page");
