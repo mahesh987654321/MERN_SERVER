@@ -26,6 +26,7 @@ router.post("/register", async (req, res) => {
       cpassword,
     });
     const userRegister = await user.save();
+
     if (userRegister) {
       res.status(201).json({ message: "User is created" });
     } else {
@@ -42,10 +43,10 @@ router.post("/login", async (req, res) => {
   }
   try {
     const userExists = await User.findOne({ email: email });
-    if (userExists) {
-      return res.status(201).json({ message: "Login successful" });
-    } else {
+    if (!userExists) {
       res.status(500).json({ error: "Email is not found" });
+    } else {
+      return res.status(201).json({ message: "Login successful" });
     }
     const user = new User({ email, password });
     const userLogin = await user.save();

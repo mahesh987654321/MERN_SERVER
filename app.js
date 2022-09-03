@@ -14,21 +14,6 @@ const middleware = (req, res, next) => {
 };
 // middleware();
 app.use(require("./router/auth"));
-app.get("/", (req, res) => {
-  res.send("Home page app");
-});
-app.get("/about", middleware, (req, res) => {
-  res.send("About page");
-});
-app.get("/contact", (req, res) => {
-  res.send("Contact page");
-});
-app.get("/signin", (req, res) => {
-  res.send("Sign In page");
-});
-app.get("/signup", (req, res) => {
-  res.send("Sign up page");
-});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
